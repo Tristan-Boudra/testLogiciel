@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { notes, activeNote, setActiveNote, createNote, updateNote } from '../../store/notes';
+import { notes, activeNote, setActiveNote, createNote, deleteNote } from '../../store/notes';
 import { v4 as uuidv4 } from 'uuid';
 
 const NoteForm = () => {
@@ -22,9 +22,15 @@ const NoteForm = () => {
     setGrade('');
     setComment('');
   };
-
+  
   const handleNoteClick = (noteId) => {
     setActiveNote(noteId);
+  };
+
+  const handleNoteDelete = (noteId) => {
+    if (window.confirm('Are you sure you want to delete this note?')) {
+      deleteNote(noteId);
+    }
   };
 
   const getNoteBackgroundColor = (grade) => {
@@ -61,23 +67,25 @@ const NoteForm = () => {
       <div className="notes-list-container">
         <h2>Notes List:</h2>
         <ul className="notes-list">
-          {notes().map((note, index) => (
-            <li
-              key={index}
-              className={`note-item ${activeNote() === note.id ? 'active' : ''}`}
-              style={{ backgroundColor: getNoteBackgroundColor(note.grade) }}
-              onClick={() => handleNoteClick(note.id)}
-            >
-              <strong>Title:</strong> {note.title}, <strong>Note:</strong> {note.grade}, <strong>Comment:</strong>{' '}
-              {note.comment}
-              <br />
-              <span className="note-date">Created on: {note.createdAt.toLocaleString()}</span>
-            </li>
-          ))}
+        {notes().map((note, index) => (
+          <li
+            key={index}
+            className={`note-item ${activeNote() === note.id ? 'active' : ''}`}
+            style={{ backgroundColor: getNoteBackgroundColor(note.grade) }}
+            onClick={() => handleNoteClick(note.id)}
+          >
+            <strong>Title:</strong> {note.title}, <strong>Note:</strong> {note.grade}, <strong>Comment:</strong>{' '}
+            {note.comment}
+            <br />
+            <span className="note-date">Created on: {note.createdAt.toLocaleString()}</span>
+            <button type="button" onClick={() => handleNoteDelete(note.id)}>Delete</button>
+          </li>
+        ))}
         </ul>
       </div>
     </div>
   );
 };
+
 
 export default NoteForm;

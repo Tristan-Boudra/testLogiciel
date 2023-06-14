@@ -1,4 +1,4 @@
-import { createEffect, createSignal } from 'solid-js';
+import { createSignal, onCleanup } from 'solid-js';
 
 export type Note = {
   id: string;
@@ -17,15 +17,7 @@ const createStore = () => {
   const [notes, setNotes] = createSignal<Note[]>([]);
   const [activeNote, setActiveNote] = createSignal<string | null>(null);
 
-  createEffect(() => {
-    // On initial load, retrieve notes from localStorage if available
-    const storedNotes = localStorage.getItem('notes');
-    if (storedNotes) {
-      setNotes(JSON.parse(storedNotes));
-    }
-  });
-
-  createEffect(() => {
+  onCleanup(() => {
     // Whenever notes change, update localStorage
     localStorage.setItem('notes', JSON.stringify(notes()));
   });
@@ -46,14 +38,29 @@ const createStore = () => {
     });
   };
 
+  const deleteNote = (noteId: string) => {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
+    if (activeNote() === noteId) {
+      setActiveNote(null);
+    }
+  };
+
   return {
     notes,
     activeNote,
     setActiveNote,
     createNote,
     updateNote,
+    deleteNote,
   };
 };
 
-export const { notes, activeNote, setActiveNote, createNote, updateNote } = createStore();
+export const {
+  notes,
+  activeNote,
+  setActiveNote,
+  createNote,
+  updateNote,
+  deleteNote,
+} = createStore();
 export type { NoteState };
