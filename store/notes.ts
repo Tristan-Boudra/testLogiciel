@@ -13,12 +13,11 @@ type NoteState = {
   activeNote: string | null;
 };
 
-const createStore = () => {
+export const createStore = () => {
   const [notes, setNotes] = createSignal<Note[]>([]);
   const [activeNote, setActiveNote] = createSignal<string | null>(null);
 
   onCleanup(() => {
-    // Whenever notes change, update localStorage
     localStorage.setItem('notes', JSON.stringify(notes()));
   });
 

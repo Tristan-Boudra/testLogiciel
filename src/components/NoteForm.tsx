@@ -28,7 +28,7 @@ const NoteForm = () => {
   };
 
   const handleNoteDelete = (noteId) => {
-    if (window.confirm('Are you sure you want to delete this note?')) {
+    if (window.confirm('Vouslez-vous vraiment supprimer cette note ?')) {
       deleteNote(noteId);
     }
   };
@@ -86,6 +86,5 @@ const NoteForm = () => {
     </div>
   );
 };
-
 
 export default NoteForm;
