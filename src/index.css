@@ -67,3 +67,49 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.note-form-container {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.note-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.note-form label {
+  margin-bottom: 10px;
+}
+
+.note-form input,
+.note-form textarea {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.notes-list-container {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.notes-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.note-item {
+  margin-bottom: 10px;
+}
+
+.note-date {
+  font-style: italic;
+  color: #888;
+}
+
+.note-item.active {
+  background-color: #eee;
+}
